@@ -1,13 +1,26 @@
 from fastapi import FastAPI
-from models import Base
+from fastapi.middleware.cors import CORSMiddleware
+from auth import router as auth_router
 from database import engine
-from database import engine, Base
+import models
 
+# Create database tables
+models.Base.metadata.create_all(bind=engine)
+
+# Initialize FastAPI
 app = FastAPI()
 
-# create database tables
-Base.metadata.create_all(bind=engine)
+app.include_router(auth_router)
 
 @app.get("/")
 def home():
     return {"message": "Welcome to the Wardrobe Management API"}
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

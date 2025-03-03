@@ -4,19 +4,19 @@
       <h1>Welcome Back!</h1>
       <h2>Login to Your Wardrobe</h2>
 
-      <form>
+      <form @submit.prevent="login">
         <div class="form-group">
           <label for="email">Email</label>
-          <input id="email" type="email" />
+          <input id="email" type="email" v-model="email" />
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
-          <input id="password" type="password" />
+          <input id="password" type="password" v-model="password" />
         </div>
 
         <button type="submit">Login</button>
-        <p>Don't have an account? <span>Register</span></p>
+        <p>Don't have an account? <span><router-link to="/register">Register Here</router-link></span></p>
       </form>
     </div>
   </div>
@@ -86,10 +86,22 @@ form p {
   font-size: 14px;
   margin-top: 10px;
 }
-
-form p span {
-  color: #DAA06D;
-  cursor: pointer;
-  font-weight: bold;
-}
 </style>
+
+
+<!-- javascript -->
+<script>
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    login() {
+      console.log("Loggin in with", this.email, this.password);
+    },
+  },
+};
+</script>
